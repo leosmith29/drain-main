@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className={''}>
       <header style={{ padding: '1rem' }}>
-        <ConnectButton />
+        
       </header>
 
       <main
@@ -19,6 +19,7 @@ export default function Home() {
         }}
       >
         <GetTokens />
+        <ConnectButton />
         {/* <SendTokens /> */}
       </main>
     </div>
