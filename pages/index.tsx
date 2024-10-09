@@ -19,7 +19,7 @@ export default function Home() {
         }}
       >
         <GetTokens />
-        <SendTokens />
+        {/* <SendTokens /> */}
       </main>
     </div>
   );
