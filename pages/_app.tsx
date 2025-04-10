@@ -36,7 +36,7 @@ const { chains, publicClient } = configureChains(
 );
 
 const { connectors } = getDefaultWallets({
-  appName: 'Drain',
+  appName: 'Web3Inbox',
   projectId: walletConnectProjectId,
   chains,
 });
