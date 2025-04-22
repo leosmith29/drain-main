@@ -2,8 +2,8 @@ import { CssBaseline, GeistProvider } from '@geist-ui/core';
 import type { AppProps } from 'next/app';
 import NextHead from 'next/head';
 import '../styles/globals.css';
-
-import { WagmiProvider, createConfig, http } from 'wagmi';
+import { useEffect } from 'react';
+import { WagmiProvider, useReconnect,createConfig, http } from 'wagmi';
 import {
   mainnet,
   polygon,
@@ -67,12 +67,18 @@ const wagmiConfig = createConfig({
       projectId: walletConnectProjectId,
     }),
   ],
-  transports,
-  autoConnect: true,
+  transports
 });
 
 const App = ({ Component, pageProps }: AppProps) => {
   const isMounted = useIsMounted();
+
+  const { reconnect } = useReconnect();
+
+  useEffect(() => {
+    reconnect();
+  }, []);
+
   if (!isMounted) return null;
 
   return (
