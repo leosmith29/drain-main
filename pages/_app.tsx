@@ -1,34 +1,35 @@
 import { CssBaseline, GeistProvider } from '@geist-ui/core';
 import type { AppProps } from 'next/app';
 import NextHead from 'next/head';
-import GithubCorner from 'react-github-corner';
-// @ts-ignore
+// import GithubCorner from 'react-github-corner'; // Optional
 import '../styles/globals.css';
 
-// Updated imports for wagmi v2
 import {
-  configureChains,
+  WagmiProvider,
   createConfig,
-  mainnet,
-  WagmiConfig,
+  http,
 } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
+import {
+  mainnet,
+  arbitrum,
+  bsc,
+  gnosis,
+  optimism,
+  polygon,
+} from 'wagmi/chains';
 
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import '@rainbow-me/rainbowkit/styles.css';
 
-import { arbitrum, bsc, gnosis, optimism, polygon } from 'viem/chains';
 import { z } from 'zod';
 import { useIsMounted } from '../hooks';
 
+// Replace with your actual project ID
 const walletConnectProjectId = z
   .string()
   .parse("f148c3b55f376631958ac1180c99b64d");
 
-const { chains, publicClient } = configureChains(
-  [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
-  [publicProvider()],
-);
+const chains = [mainnet, polygon, optimism, arbitrum, bsc, gnosis];
 
 const { connectors } = getDefaultWallets({
   appName: 'Web3Inbox',
@@ -39,17 +40,24 @@ const { connectors } = getDefaultWallets({
 const wagmiConfig = createConfig({
   autoConnect: true,
   connectors,
-  publicClient,
+  publicClient: http(), // uses default chain RPC URLs
 });
 
 const App = ({ Component, pageProps }: AppProps) => {
   const isMounted = useIsMounted();
 
   if (!isMounted) return null;
+
   return (
     <>
-      <WagmiConfig config={wagmiConfig}>
-        <RainbowKitProvider coolMode chains={chains}>
+      {/* <GithubCorner
+        href="https://github.com/dawsbot/drain"
+        size="140"
+        bannerColor="#e056fd"
+      /> */}
+
+      <WagmiProvider config={wagmiConfig}>
+        <RainbowKitProvider chains={chains} coolMode>
           <NextHead>
             <title>Drain</title>
             <meta
@@ -63,7 +71,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             <Component {...pageProps} />
           </GeistProvider>
         </RainbowKitProvider>
-      </WagmiConfig>
+      </WagmiProvider>
     </>
   );
 };
