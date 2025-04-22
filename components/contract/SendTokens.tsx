@@ -8,6 +8,7 @@ import { erc20Abi } from 'viem';
 import { checkedTokensAtom } from '../../src/atoms/checked-tokens-atom';
 import { destinationAddressAtom } from '../../src/atoms/destination-address-atom';
 import { globalTokensAtom } from '../../src/atoms/global-tokens-atom';
+import { useIsMounted } from '../hooks';
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -24,9 +25,11 @@ export const SendTokens = () => {
   const [destinationAddress, setDestinationAddress] = useAtom(
     destinationAddressAtom,
   );
+  const isMounted = useIsMounted();
   const [checkedRecords, setCheckedRecords] = useAtom(checkedTokensAtom);
   const { data: walletClient } = useWalletClient();
   const publicClient = usePublicClient();
+  if (!isMounted) return null;
   const sendAllCheckedTokens = async () => {
 if (!publicClient) {
       showToast('Public client is not available.', 'error');
@@ -129,6 +132,7 @@ if (!publicClient) {
   const checkedCount = Object.values(checkedRecords).filter(
     (record) => record.isChecked,
   ).length;
+  
   return (
     <div style={{ margin: '20px' }}>
       <form>

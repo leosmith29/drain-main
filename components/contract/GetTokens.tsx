@@ -7,6 +7,7 @@ import { useAtom } from 'jotai';
 import { checkedTokensAtom } from '../../src/atoms/checked-tokens-atom';
 import { globalTokensAtom } from '../../src/atoms/global-tokens-atom';
 import { httpFetchTokens, Tokens } from '../../src/fetch-tokens';
+import { useIsMounted } from '../hooks';
 
 const usdFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -18,6 +19,7 @@ const TokenRow: React.FunctionComponent<{ token: Tokens[number] }> = ({
 }) => {
   const [checkedRecords, setCheckedRecords] = useAtom(checkedTokensAtom);
   const { chain } = useAccount();
+  const isMounted = useIsMounted();
   const pendingTxn =
     checkedRecords[token.contract_address as `0x${string}`]?.pendingTxn;
   const setTokenChecked = (tokenAddress: string, isChecked: boolean) => {
@@ -37,6 +39,7 @@ const TokenRow: React.FunctionComponent<{ token: Tokens[number] }> = ({
   const { isLoading, isSuccess } = useWaitForTransactionReceipt({
     hash: pendingTxn?.blockHash || undefined,
   });
+  if (!isMounted) return null;
   return (
     <div key={contract_address}>
       {isLoading && <Loading />}
