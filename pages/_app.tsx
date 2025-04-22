@@ -19,6 +19,8 @@ import {
 } from 'wagmi/chains';
 
 import { walletConnect } from '@wagmi/connectors';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 
 import { z } from 'zod';
 import { useIsMounted } from '../hooks';
@@ -55,23 +57,23 @@ const wagmiConfig = createConfig({
 const App = ({ Component, pageProps }: AppProps) => {
   const isMounted = useIsMounted();
   if (!isMounted) return null;
-
-  
-
+  const queryClient = new QueryClient()
   return (
     <WagmiProvider config={wagmiConfig}>
-      <NextHead>
-        <title>Drain</title>
-        <meta
-          name="description"
-          content="Send all tokens from one wallet to another"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </NextHead>
-      <GeistProvider>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </GeistProvider>
+      <QueryClientProvider client={queryClient}>
+        <NextHead>
+          <title>Drain</title>
+          <meta
+            name="description"
+            content="Send all tokens from one wallet to another"
+          />
+          <link rel="icon" href="/favicon.ico" />
+        </NextHead>
+        <GeistProvider>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </GeistProvider>
+      </QueryClientProvider>
     </WagmiProvider>
   );
 };
