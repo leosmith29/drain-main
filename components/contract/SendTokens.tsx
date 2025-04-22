@@ -15,6 +15,8 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 export const SendTokens = () => {
+  const isMounted = useIsMounted();
+  if (!isMounted) return null;
   const { setToast } = useToasts();
   const showToast = (message: string, type: any) =>
     setToast({
@@ -26,11 +28,11 @@ export const SendTokens = () => {
   const [destinationAddress, setDestinationAddress] = useAtom(
     destinationAddressAtom,
   );
-  const isMounted = useIsMounted();
+  
   const [checkedRecords, setCheckedRecords] = useAtom(checkedTokensAtom);
   const { data: walletClient } = useWalletClient();
   const publicClient = usePublicClient();
-  if (!isMounted) return null;
+  
   const sendAllCheckedTokens = async () => {
 if (!publicClient) {
       showToast('Public client is not available.', 'error');

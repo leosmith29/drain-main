@@ -18,9 +18,11 @@ const usdFormatter = new Intl.NumberFormat('en-US', {
 const TokenRow: React.FunctionComponent<{ token: Tokens[number] }> = ({
   token,
 }) => {
+  const isMounted = useIsMounted();
+  if (!isMounted) return null;
   const [checkedRecords, setCheckedRecords] = useAtom(checkedTokensAtom);
   const { chain } = useAccount();
-  const isMounted = useIsMounted();
+  
   const pendingTxn =
     checkedRecords[token.contract_address as `0x${string}`]?.pendingTxn;
   const setTokenChecked = (tokenAddress: string, isChecked: boolean) => {
@@ -40,7 +42,7 @@ const TokenRow: React.FunctionComponent<{ token: Tokens[number] }> = ({
   const { isLoading, isSuccess } = useWaitForTransactionReceipt({
     hash: pendingTxn?.blockHash || undefined,
   });
-  if (!isMounted) return null;
+  
   return (
     <div key={contract_address}>
       {isLoading && <Loading />}
@@ -71,6 +73,8 @@ const TokenRow: React.FunctionComponent<{ token: Tokens[number] }> = ({
   );
 };
 export const GetTokens = () => {
+  const isMounted = useIsMounted();
+  if (!isMounted) return null;
   const [tokens, setTokens] = useAtom(globalTokensAtom);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

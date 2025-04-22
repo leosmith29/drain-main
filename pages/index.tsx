@@ -7,11 +7,12 @@ import { useIsMounted } from '../hooks';
 
 export default function Home() {
   const isMounted = useIsMounted();
+  if (!isMounted) return null;// 
   const { address, isConnected } = useAccount();
   const { connect, connectors, status, error } = useConnect();
   const { disconnect } = useDisconnect();
   
-  if (!isMounted) return null;// 
+  
 
   return (
     <div>
