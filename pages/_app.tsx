@@ -13,6 +13,8 @@ import {
   gnosis,
 } from 'wagmi/chains';
 
+import { walletConnect } from '@wagmi/connectors';
+
 import {
   connectorsForWallets,
   RainbowKitProvider,
@@ -61,9 +63,9 @@ const transports = {
 const wagmiConfig = createConfig({
   chains: [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
   connectors: [
-    metaMaskWallet({ chains, projectId: walletConnectProjectId }),
-    coinbaseWallet({ appName: 'Web3Inbox', chains }),
-    walletConnectWallet({ chains, projectId: walletConnectProjectId }),
+    walletConnect({
+      projectId: walletConnectProjectId,
+    }),
   ],
   transports,
   autoConnect: true,
