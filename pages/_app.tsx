@@ -11,7 +11,7 @@ import {
   arbitrum,
   bsc,
   gnosis,
-} from 'wagmi/core/chains';
+} from 'wagmi/chains';
 
 import {
   connectorsForWallets,
@@ -59,7 +59,7 @@ const transports = {
 
 // ✅ Create Wagmi config
 const wagmiConfig = createConfig({
-  chains,
+  chains: [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
   connectors,
   transports,
   autoConnect: true,
