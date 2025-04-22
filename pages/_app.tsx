@@ -3,7 +3,11 @@ import { CssBaseline, GeistProvider } from '@geist-ui/core';
 import type { AppProps } from 'next/app';
 import NextHead from 'next/head';
 import '../styles/globals.css';
-
+import '@rainbow-me/rainbowkit/styles.css';
+import {
+  getDefaultConfig,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
 import {
   WagmiProvider,
   createConfig,
@@ -43,6 +47,13 @@ const transports = {
   [gnosis.id]: http(),
 };
 
+const config = getDefaultConfig({
+  appName: 'MyWeb3Inboc',
+  projectId: '63a5cb131e7dd5b53a021c46347d190b',
+  chains: [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
+  ssr: true, // If your dApp uses server side rendering (SSR)
+});
+
 // ✅ Create Wagmi config
 const wagmiConfig = createConfig({
   chains: [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
@@ -59,8 +70,9 @@ const App = ({ Component, pageProps }: AppProps) => {
   if (!isMounted) return null;
   const queryClient = new QueryClient()
   return (
-    <WagmiProvider config={wagmiConfig}>
+    <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
+      <RainbowKitProvider>
         <NextHead>
           <title>Drain</title>
           <meta
@@ -73,6 +85,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           <CssBaseline />
           <Component {...pageProps} />
         </GeistProvider>
+        </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );

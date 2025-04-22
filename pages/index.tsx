@@ -5,7 +5,7 @@ import { injected } from 'wagmi/connectors';
 import { GetTokens, SendTokens } from '../components/contract';
 import { useIsMounted } from '../hooks';
 import { useEffect } from 'react';
-
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 export default function Home() {
   const isMounted = useIsMounted();
   
@@ -23,7 +23,7 @@ export default function Home() {
   return (
     <div>
       <header style={{ padding: '1rem' }}>
-        {isConnected ? (
+        {/* {isConnected ? (
           <div>
             <button onClick={() => disconnect()}>
               Disconnect ({address?.slice(0, 6)}...{address?.slice(-4)})
@@ -44,7 +44,8 @@ export default function Home() {
             ))}
             {error && <div style={{ color: 'red' }}>{error.message}</div>}
           </div>
-        )}
+        )} */}
+        <ConnectButton />
       </header>
 
       <main
