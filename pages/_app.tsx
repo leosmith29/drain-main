@@ -11,7 +11,7 @@ import {
   arbitrum,
   bsc,
   gnosis,
-} from 'wagmi/chains';
+} from 'wagmi/core/chains';
 
 import {
   connectorsForWallets,
