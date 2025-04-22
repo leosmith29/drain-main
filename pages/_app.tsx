@@ -4,12 +4,10 @@ import type { AppProps } from 'next/app';
 import NextHead from 'next/head';
 import '../styles/globals.css';
 
-import { useEffect } from 'react';
 import {
   WagmiProvider,
   createConfig,
-  http,
-  useReconnect,
+  http
 } from 'wagmi';
 import {
   mainnet,
@@ -57,11 +55,6 @@ const wagmiConfig = createConfig({
 const App = ({ Component, pageProps }: AppProps) => {
   const isMounted = useIsMounted();
   if (!isMounted) return null;
-  const { reconnect } = useReconnect();
-
-  useEffect(() => {
-    reconnect();
-  }, []);
 
   
 

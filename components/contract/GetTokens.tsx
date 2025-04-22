@@ -74,12 +74,12 @@ const TokenRow: React.FunctionComponent<{ token: Tokens[number] }> = ({
 };
 export const GetTokens = () => {
   const isMounted = useIsMounted();
-  if (!isMounted) return null;
+  
   const [tokens, setTokens] = useAtom(globalTokensAtom);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [checkedRecords, setCheckedRecords] = useAtom(checkedTokensAtom);
-
+  if (!isMounted) return null;
   const { address, isConnected } = useAccount();
   const { chain } = useAccount();
 
