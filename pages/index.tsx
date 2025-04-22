@@ -28,7 +28,7 @@ export default function Home() {
               >
                 {connector.name}
                 {!connector.ready && ' (unsupported)'}
-                {status === 'connecting' && ' (connecting)'}
+                {status === 'pending' && ' (connecting)'}
               </button>
             ))}
             {error && <div style={{ color: 'red' }}>{error.message}</div>}
