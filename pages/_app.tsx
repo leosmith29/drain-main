@@ -39,7 +39,7 @@ const { connectors } = getDefaultWallets({
 
 const wagmiConfig = createConfig({
   autoConnect: true,
-  connectors,
+  connectors: connectors(), // Ensure connectors is an array
   publicClient: http(), // uses default chain RPC URLs
 });
 
