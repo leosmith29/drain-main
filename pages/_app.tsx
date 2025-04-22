@@ -1,3 +1,4 @@
+'use client';
 import { CssBaseline, GeistProvider } from '@geist-ui/core';
 import type { AppProps } from 'next/app';
 import NextHead from 'next/head';

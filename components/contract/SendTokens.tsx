@@ -1,3 +1,4 @@
+'use client';
 import { Button, Input, useToasts } from '@geist-ui/core';
 import { usePublicClient, useWalletClient } from 'wagmi';
 
