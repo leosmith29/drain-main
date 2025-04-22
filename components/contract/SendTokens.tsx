@@ -4,7 +4,7 @@ import { usePublicClient, useWalletClient } from 'wagmi';
 import { isAddress } from 'essential-eth';
 import { useAtom } from 'jotai';
 import { normalize } from 'viem/ens';
-import { erc20ABI } from 'viem';
+import { erc20Abi } from 'viem';
 import { checkedTokensAtom } from '../../src/atoms/checked-tokens-atom';
 import { destinationAddressAtom } from '../../src/atoms/destination-address-atom';
 import { globalTokensAtom } from '../../src/atoms/global-tokens-atom';
@@ -61,7 +61,7 @@ export const SendTokens = () => {
       const { request } = await publicClient.simulateContract({
         account: walletClient.account,
         address: tokenAddress,
-        abi: erc20ABI,
+        abi: erc20Abi,
         functionName: 'transfer',
         args: [
           destinationAddress as `0x${string}`,
