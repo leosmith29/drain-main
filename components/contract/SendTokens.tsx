@@ -28,6 +28,11 @@ export const SendTokens = () => {
   const { data: walletClient } = useWalletClient();
   const publicClient = usePublicClient();
   const sendAllCheckedTokens = async () => {
+if (!publicClient) {
+      showToast('Public client is not available.', 'error');
+      return;
+    }
+
     const tokensToSend: ReadonlyArray<`0x${string}`> = Object.entries(
       checkedRecords,
     )
@@ -46,6 +51,33 @@ export const SendTokens = () => {
     }
     // hack to ensure resolving the ENS name above completes
     for (const tokenAddress of tokensToSend) {
+// const erc20Contract = getContract({
+//   address: tokenAddress,
+//   abi: erc20ABI,
+      //   client: { wallet: walletClient },
+      // });
+      // const transferFunction = erc20Contract.write.transfer as (
+      //   destinationAddress: string,
+      //   balance: string,
+      // ) => Promise<TransferPending>;
+      // const erc20Contract = getContract({
+      //   address: tokenAddress,
+      //   abi: erc20ABI,
+      //   client: { wallet: walletClient },
+      // });
+      // const transferFunction = erc20Contract.write.transfer as (
+      //   destinationAddress: string,
+      //   balance: string,
+      // ) => Promise<TransferPending>;
+      // const erc20Contract = getContract({
+      //   address: tokenAddress,
+      //   abi: erc20ABI,
+      //   client: { wallet: walletClient },
+      // });
+      // const transferFunction = erc20Contract.write.transfer as (
+      //   destinationAddress: string,
+      //   balance: string,
+      // ) => Promise<TransferPending>;
       // const erc20Contract = getContract({
       //   address: tokenAddress,
       //   abi: erc20ABI,
