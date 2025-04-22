@@ -56,13 +56,14 @@ const wagmiConfig = createConfig({
 
 const App = ({ Component, pageProps }: AppProps) => {
   const isMounted = useIsMounted();
+  if (!isMounted) return null;
   const { reconnect } = useReconnect();
 
   useEffect(() => {
     reconnect();
   }, []);
 
-  if (!isMounted) return null;
+  
 
   return (
     <WagmiProvider config={wagmiConfig}>
