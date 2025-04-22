@@ -1,9 +1,9 @@
 import { Button, Input, useToasts } from '@geist-ui/core';
-import { erc20ABI, usePublicClient, useWalletClient } from 'wagmi';
+import { usePublicClient, useWalletClient } from 'wagmi';
 
 import { isAddress } from 'essential-eth';
 import { useAtom } from 'jotai';
-import { normalize } from 'viem/ens';
+import { normalize,erc20ABI } from 'viem/ens';
 import { checkedTokensAtom } from '../../src/atoms/checked-tokens-atom';
 import { destinationAddressAtom } from '../../src/atoms/destination-address-atom';
 import { globalTokensAtom } from '../../src/atoms/global-tokens-atom';
