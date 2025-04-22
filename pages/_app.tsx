@@ -5,12 +5,11 @@ import GithubCorner from 'react-github-corner';
 // @ts-ignore
 import '../styles/globals.css';
 
-// Imports
+// Updated imports for wagmi v2
 import {
   configureChains,
   createConfig,
   mainnet,
-  // createClient,
   WagmiConfig,
 } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
@@ -22,13 +21,9 @@ import { arbitrum, bsc, gnosis, optimism, polygon } from 'viem/chains';
 import { z } from 'zod';
 import { useIsMounted } from '../hooks';
 
-// const walletConnectProjectId = z
-//   .string()
-//   .parse(process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID);
-
- const walletConnectProjectId = z
-   .string()
-   .parse("f148c3b55f376631958ac1180c99b64d");
+const walletConnectProjectId = z
+  .string()
+  .parse("f148c3b55f376631958ac1180c99b64d");
 
 const { chains, publicClient } = configureChains(
   [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
@@ -53,12 +48,6 @@ const App = ({ Component, pageProps }: AppProps) => {
   if (!isMounted) return null;
   return (
     <>
-      {/* <GithubCorner
-        href="https://github.com/dawsbot/drain"
-        size="140"
-        bannerColor="#e056fd"
-      /> */}
-
       <WagmiConfig config={wagmiConfig}>
         <RainbowKitProvider coolMode chains={chains}>
           <NextHead>
