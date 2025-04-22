@@ -60,7 +60,11 @@ const transports = {
 // ✅ Create Wagmi config
 const wagmiConfig = createConfig({
   chains: [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
-  connectors,
+  connectors: [
+    metaMaskWallet({ chains, projectId: walletConnectProjectId }),
+    coinbaseWallet({ appName: 'Web3Inbox', chains }),
+    walletConnectWallet({ chains, projectId: walletConnectProjectId }),
+  ],
   transports,
   autoConnect: true,
 });
