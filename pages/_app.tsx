@@ -28,7 +28,7 @@ import { useIsMounted } from '../hooks';
 // ✅ Parse WalletConnect project ID from env or constant
 const walletConnectProjectId = z
   .string()
-  .parse("f148c3b55f376631958ac1180c99b64d");
+  .parse("63a5cb131e7dd5b53a021c46347d190b");
 
 // ✅ Define supported chains
 const chains = [mainnet, polygon, optimism, arbitrum, bsc, gnosis];
