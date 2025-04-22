@@ -7,7 +7,7 @@ import { useAtom } from 'jotai';
 import { checkedTokensAtom } from '../../src/atoms/checked-tokens-atom';
 import { globalTokensAtom } from '../../src/atoms/global-tokens-atom';
 import { httpFetchTokens, Tokens } from '../../src/fetch-tokens';
-import { useIsMounted } from '../hooks';
+import { useIsMounted } from '../../hooks';
 
 const usdFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
