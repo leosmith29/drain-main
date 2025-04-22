@@ -3,11 +3,15 @@
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { injected } from 'wagmi/connectors';
 import { GetTokens, SendTokens } from '../components/contract';
+import { useIsMounted } from '../hooks';
 
 export default function Home() {
+  const isMounted = useIsMounted();
   const { address, isConnected } = useAccount();
   const { connect, connectors, status, error } = useConnect();
   const { disconnect } = useDisconnect();
+  
+  if (!isMounted) return null;// 
 
   return (
     <div>
