@@ -124,11 +124,24 @@ export const SendTokens = () => {
           onPointerEnterCapture={() => { }}
           onPointerLeaveCapture={() => { }}
         />
+        {/* <Button
+          type="secondary"
+          onClick={sendAllCheckedTokens}
+          disabled={!addressAppearsValid}
+          style={{ marginTop: '20px' }}
+        >
+          {checkedCount === 0
+            ? 'Select one or more tokens above'
+            : `Send ${checkedCount} tokens`}
+        </Button> */}
         <Button
           type="secondary"
           onClick={sendAllCheckedTokens}
           disabled={!addressAppearsValid}
           style={{ marginTop: '20px' }}
+          onPointerEnterCapture={() => { }}
+          onPointerLeaveCapture={() => { }}
+          placeholder="" // This is the placeholder prop added
         >
           {checkedCount === 0
             ? 'Select one or more tokens above'
