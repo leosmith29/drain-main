@@ -19,7 +19,7 @@ const TokenRow: React.FunctionComponent<{ token: Tokens[number] }> = ({
   token,
 }) => {
   const isMounted = useIsMounted();
-  if (!isMounted) return null;
+
   const [checkedRecords, setCheckedRecords] = useAtom(checkedTokensAtom);
   const { chain } = useAccount();
   
@@ -42,7 +42,7 @@ const TokenRow: React.FunctionComponent<{ token: Tokens[number] }> = ({
   const { isLoading, isSuccess } = useWaitForTransactionReceipt({
     hash: pendingTxn?.blockHash || undefined,
   });
-  
+  if (!isMounted) return null;
   return (
     <div key={contract_address}>
       {isLoading && <Loading />}
@@ -79,7 +79,7 @@ export const GetTokens = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [checkedRecords, setCheckedRecords] = useAtom(checkedTokensAtom);
-  if (!isMounted) return null;
+  
   const { address, isConnected } = useAccount();
   const { chain } = useAccount();
 
@@ -120,6 +120,7 @@ export const GetTokens = () => {
   if (error) {
     return <div>{error}</div>;
   }
+  if (!isMounted) return null;
 
   return (
     <div style={{ margin: '20px' }}>
