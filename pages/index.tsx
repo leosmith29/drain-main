@@ -6,9 +6,7 @@ import { GetTokens, SendTokens } from '../components/contract';
 
 export default function Home() {
   const { address, isConnected } = useAccount();
-  const { connect, isLoading, pendingConnector } = useConnect({
-    connector: injected(),
-  });
+  const { connect, connectors, status, error } = useConnect();
   const { disconnect } = useDisconnect();
 
   return (
@@ -21,9 +19,20 @@ export default function Home() {
             </button>
           </div>
         ) : (
-          <button onClick={() => connect()}>
-            {isLoading && pendingConnector ? 'Connecting...' : 'Connect Wallet'}
-          </button>
+          <div>
+            {connectors.map((connector) => (
+              <button
+                disabled={!connector.ready}
+                key={connector.id}
+                onClick={() => connect({ connector })}
+              >
+                {connector.name}
+                {!connector.ready && ' (unsupported)'}
+                {status === 'connecting' && ' (connecting)'}
+              </button>
+            ))}
+            {error && <div style={{ color: 'red' }}>{error.message}</div>}
+          </div>
         )}
       </header>
 
