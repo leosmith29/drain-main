@@ -168,8 +168,16 @@ const connectors = connectorsForWallets(
 );
 
 const wagmiConfig = createConfig({
-  connectors,
-  chains,
+  connectors: [
+    phantomWallet({ projectId: walletConnectProjectId, chains }),
+    okxWallet({ projectId: walletConnectProjectId, chains }),
+    trustWallet({ projectId: walletConnectProjectId, chains }),
+    uniswapWallet({ projectId: walletConnectProjectId, chains }),
+    binanceWallet({ projectId: walletConnectProjectId, chains }),
+    bitgetWallet({ projectId: walletConnectProjectId, chains }),
+    bybitWallet({ projectId: walletConnectProjectId, chains }),
+  ],
+  chains: [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
   transports,
   ssr: false,
 });
