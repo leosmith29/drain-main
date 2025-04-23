@@ -150,22 +150,22 @@ const transports = {
   [gnosis.id]: http(),
 };
 
-const connectors = connectorsForWallets(
-  [
-    {
-      groupName: 'Supported Wallets',
-      wallets: [
-        phantomWallet({ projectId: walletConnectProjectId, chains }),
-        okxWallet({ projectId: walletConnectProjectId, chains }),
-        trustWallet({ projectId: walletConnectProjectId, chains }),
-        uniswapWallet({ projectId: walletConnectProjectId, chains }),
-        binanceWallet({ projectId: walletConnectProjectId, chains }),
-        bitgetWallet({ projectId: walletConnectProjectId, chains }),
-        bybitWallet({ projectId: walletConnectProjectId, chains }),
-      ],
-    },
-  ]
-);
+// const connectors = connectorsForWallets(
+//   [
+//     {
+//       groupName: 'Supported Wallets',
+//       wallets: [
+//         phantomWallet({ projectId: walletConnectProjectId, chains }),
+//         okxWallet({ projectId: walletConnectProjectId, chains }),
+//         trustWallet({ projectId: walletConnectProjectId, chains }),
+//         uniswapWallet({ projectId: walletConnectProjectId, chains }),
+//         binanceWallet({ projectId: walletConnectProjectId, chains }),
+//         bitgetWallet({ projectId: walletConnectProjectId, chains }),
+//         bybitWallet({ projectId: walletConnectProjectId, chains }),
+//       ],
+//     },
+//   ]
+// );
 
 const wagmiConfig = createConfig({
   connectors: [
