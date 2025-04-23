@@ -150,7 +150,7 @@ const transports = {
 const config = createConfig(
   getDefaultConfig({
     appName: 'MyWeb3Inboc',
-    projectId: walletConnectProjectId,
+    walletConnectProjectId: walletConnectProjectId,
     chains: [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
     transports,
     ssr: true,
@@ -162,7 +162,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   if (!isMounted) return null;
 
   const queryClient = new QueryClient();
-
+walletConnectProjectId
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
