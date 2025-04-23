@@ -5,7 +5,7 @@ import { injected } from 'wagmi/connectors';
 import { GetTokens, SendTokens } from '../components/contract';
 import { useIsMounted } from '../hooks';
 import { useEffect } from 'react';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { ConnectKitButton } from 'connectkit';
 export default function Home() {
   const isMounted = useIsMounted();
   
@@ -46,7 +46,7 @@ export default function Home() {
             {error && <div style={{ color: 'red' }}>{error.message}</div>}
           </div>
         )} */}
-        <ConnectButton />
+        <ConnectKitButton />
       </header>
 
       <main
