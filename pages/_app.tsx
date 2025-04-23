@@ -187,7 +187,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider chains={[mainnet, polygon, optimism, arbitrum, bsc, gnosis]}>
+        <RainbowKitProvider>
           <NextHead>
             <title>Drain</title>
             <meta
