@@ -11,12 +11,13 @@ export default function Home() {
   
   const { address, isConnected } = useAccount();
   const { connect, connectors, status, error } = useConnect();
-  const { disconnect } = useDisconnect();
-    const { reconnect } = useReconnect();
   
-    useEffect(() => {
-      reconnect();
-    }, []);
+  // const { disconnect } = useDisconnect();
+    // const { reconnect } = useReconnect();
+  
+    // useEffect(() => {
+    //   reconnect();
+    // }, []);
   
     if (!isMounted) return null;// 
 
