@@ -30,9 +30,7 @@ const transports = {
 };
 
 // Wagmi config with ConnectKit-compatible connectors
-const config = createConfig({
-  appName: 'MyWeb3Inboc',
-  projectId: walletConnectProjectId,
+const config = createConfig({  
   chains:[mainnet, polygon, optimism, arbitrum, bsc, gnosis],
   transports,
   connectors: [
