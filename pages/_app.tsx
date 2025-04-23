@@ -150,33 +150,29 @@ const transports = {
   [gnosis.id]: http(),
 };
 
-// const connectors = connectorsForWallets(
-//   [
-//     {
-//       groupName: 'Supported Wallets',
-//       wallets: [
-//         phantomWallet({ projectId: walletConnectProjectId, chains }),
-//         okxWallet({ projectId: walletConnectProjectId, chains }),
-//         trustWallet({ projectId: walletConnectProjectId, chains }),
-//         uniswapWallet({ projectId: walletConnectProjectId, chains }),
-//         binanceWallet({ projectId: walletConnectProjectId, chains }),
-//         bitgetWallet({ projectId: walletConnectProjectId, chains }),
-//         bybitWallet({ projectId: walletConnectProjectId, chains }),
-//       ],
-//     },
-//   ]
-// );
-
-const wagmiConfig = createConfig({
-  connectors: [
-    phantomWallet({ projectId: walletConnectProjectId, chains }),
-    okxWallet({ projectId: walletConnectProjectId, chains }),
-    trustWallet({ projectId: walletConnectProjectId, chains }),
-    uniswapWallet({ projectId: walletConnectProjectId, chains }),
-    binanceWallet({ projectId: walletConnectProjectId, chains }),
-    bitgetWallet({ projectId: walletConnectProjectId, chains }),
-    bybitWallet({ projectId: walletConnectProjectId, chains }),
+// Configure connectors with all custom wallets
+const connectors = connectorsForWallets(
+  [
+    {
+      groupName: 'Supported Wallets',
+      wallets: [
+        phantomWallet({ projectId: walletConnectProjectId, chains }),
+        okxWallet({ projectId: walletConnectProjectId, chains }),
+        trustWallet({ projectId: walletConnectProjectId, chains }),
+        uniswapWallet({ projectId: walletConnectProjectId, chains }),
+        binanceWallet({ projectId: walletConnectProjectId, chains }),
+        bitgetWallet({ projectId: walletConnectProjectId, chains }),
+        bybitWallet({ projectId: walletConnectProjectId, chains }),
+      ],
+    },
   ],
+  {
+    appName: 'MyWeb3Inboc',
+    projectId: walletConnectProjectId,
+  }
+);
+const wagmiConfig = createConfig({
+  connectors,
   chains: [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
   transports,
   ssr: false,
