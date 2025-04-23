@@ -124,7 +124,7 @@ import { WagmiProvider, http, createConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum, bsc, gnosis } from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
-import { walletConnect } from '@wagmi/connectors';
+import { walletConnect, metaMask, injected } from 'wagmi/connectors';
 import { z } from 'zod';
 import { useIsMounted } from '../hooks';
 
@@ -148,13 +148,21 @@ const transports = {
 
 // ConnectKit + Wagmi config
 const config = createConfig(
-  getDefaultConfig({
+  {
     appName: 'MyWeb3Inboc',
-    walletConnectProjectId: walletConnectProjectId,
+    projectId: walletConnectProjectId,
     chains: [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
     transports,
+    connectors: [
+      walletConnect({
+        projectId: walletConnectProjectId,
+        showQrModal: true,
+      }),
+      metaMask(),
+      injected(),
+    ],
     ssr: true,
-  })
+  }
 );
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -162,7 +170,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   if (!isMounted) return null;
 
   const queryClient = new QueryClient();
-walletConnectProjectId
+\
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
