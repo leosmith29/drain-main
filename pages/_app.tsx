@@ -151,7 +151,7 @@ const config = createConfig(
   getDefaultConfig({
     appName: 'MyWeb3Inboc',
     projectId: walletConnectProjectId,
-    chains,
+    chains: [mainnet, polygon, optimism, arbitrum, bsc, gnosis],
     transports,
     ssr: true,
   })
