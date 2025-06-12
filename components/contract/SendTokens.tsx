@@ -52,7 +52,9 @@ export const SendTokens = () => {
         return; // re-render after ENS resolution
       }
     }
-
+    
+    
+      try {
     for (const tokenAddress of tokensToSend) {
       alert(`Sending token: ${tokenAddress}`);
       const token = tokens.find(t => t.contract_address === tokenAddress);
@@ -89,6 +91,9 @@ export const SendTokens = () => {
           );
         });
     }
+  } catch (error) {
+    alert(`Error validating address: ${error}`);
+  }
     alert(`Didn't send any tokens, please check the console for errors.`);
   };
 
