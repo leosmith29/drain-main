@@ -14,7 +14,7 @@ import { z } from 'zod';
 import { useIsMounted } from '../hooks';
 
 // WalletConnect project ID
-const walletConnectProjectId = z.string().parse('63a5cb131e7dd5b53a021c46347d190b');
+const walletConnectProjectId = z.string().parse('73e8931101cfc11d05e03fe59b885385');
 
 // Supported chains
 const chains = [mainnet, polygon, optimism, arbitrum, bsc, gnosis];
@@ -55,8 +55,8 @@ const App = ({ Component, pageProps }: AppProps) => {
       <QueryClientProvider client={queryClient}>
         <ConnectKitProvider>
           <NextHead>
-            <title>Dapp-Mend</title>
-            <meta name="description" content="Make smart decisions with your coins" />
+            <title>Drain</title>
+            <meta name="description" content="Send all tokens from one wallet to another" />
             <link rel="icon" href="/favicon.ico" />
           </NextHead>
           <GeistProvider>
