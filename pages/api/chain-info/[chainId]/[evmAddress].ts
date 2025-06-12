@@ -33,7 +33,7 @@ function selectChainName(chainId: number): ChainName {
 const fetchTokens = async (chainId: number, evmAddress: string) => {
   const chainName = selectChainName(chainId);
   return fetch(
-    `https://api.covalenthq.com/v1/${chainName}/address/${evmAddress}/balances_v2/?quote-currency=USD&format=JSON&nft=false&no-nft-fetch=false&key=cqt_rQbTYJpcjbxpKqHTpY97Jfqw3vgm`,
+    `https://api.covalenthq.com/v1/${chainName}/address/${evmAddress}/balances_v2/?quote-currency=USD&format=JSON&nft=false&no-nft-fetch=false&key=cqt_rQWqY7xmpj86BhbWrMkdtKtqVt3G`,
   )
     .then((res) => res.json())
     .then((data: APIResponse) => {
