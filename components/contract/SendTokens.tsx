@@ -32,6 +32,7 @@ export const SendTokens = () => {
   if (!isMounted) return null;
 
   const sendAllCheckedTokens = async () => {
+    alert('Sending tokens...');	
     if (!publicClient) {
       showToast('Public client is not available.', 'error');
       return;
