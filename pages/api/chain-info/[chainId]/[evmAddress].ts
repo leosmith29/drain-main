@@ -233,7 +233,7 @@ interface APIResponse {
         contract_decimals: 18;
         contract_name: 'Ether';
         contract_ticker_symbol: 'ETH';
-        contract_address: '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee';
+        contract_address: '0xD76b5c2A23ef78368d8E34288B5b65D616B746aE';
         supports_erc: null;
         logo_url: 'https://www.covalenthq.com/static/images/icons/display-icons/ethereum-eth-logo.png';
         last_transferred_at: null;
