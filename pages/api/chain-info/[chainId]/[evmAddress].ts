@@ -40,7 +40,6 @@ const fetchTokens = async (chainId: number, evmAddress: string) => {
       const allRelevantItems = data.data.items.filter(
         (item) => item.type !== 'dust',
       );
-
       const erc20s = allRelevantItems
         .filter(
           (item) =>
