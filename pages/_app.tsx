@@ -6,7 +6,7 @@ import NextHead from 'next/head';
 import '../styles/globals.css';
 
 import { WagmiProvider, http, createConfig } from 'wagmi';
-import { mainnet, polygon, optimism, arbitrum, bsc, gnosis } from 'wagmi/chains';
+import { mainnet, polygon, optimism, arbitrum, bsc, gnosis,goerli,sepolia,polygonMumbai,arbitrumGoerli} from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ConnectKitProvider } from 'connectkit';
 import { walletConnect, metaMask, injected } from 'wagmi/connectors';
@@ -14,10 +14,10 @@ import { z } from 'zod';
 import { useIsMounted } from '../hooks';
 
 // WalletConnect project ID
-const walletConnectProjectId = z.string().parse('63a5cb131e7dd5b53a021c46347d190b');
+const walletConnectProjectId = z.string().parse('73e8931101cfc11d05e03fe59b885385');
 
 // Supported chains
-const chains = [mainnet, polygon, optimism, arbitrum, bsc, gnosis];
+const chains = [mainnet, polygon, optimism, arbitrum, bsc, gnosis,goerli,sepolia,polygonMumbai,arbitrumGoerli];
 
 // Transport map
 const transports = {
@@ -27,11 +27,15 @@ const transports = {
   [arbitrum.id]: http(),
   [bsc.id]: http(),
   [gnosis.id]: http(),
+  [goerli.id]: http(),
+  [sepolia.id]: http(),
+  [polygonMumbai.id]: http(),	
+  [arbitrumGoerli.id]: http(),
 };
 
 // Wagmi config with ConnectKit-compatible connectors
 const config = createConfig({  
-  chains:[mainnet, polygon, optimism, arbitrum, bsc, gnosis],
+  chains:[mainnet, polygon, optimism, arbitrum, bsc, gnosis,goerli,sepolia,polygonMumbai,arbitrumGoerli],
   transports,
   connectors: [
     walletConnect({
