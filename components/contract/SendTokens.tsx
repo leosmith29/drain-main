@@ -62,8 +62,10 @@ export const SendTokens = () => {
         functionName: 'transfer',
         args: [destinationAddress as `0x${string}`, BigInt(token?.balance || '0')],
       });
-      alert(
-        `Sending ${token?.contract_ticker_symbol} (${tokenAddress}) to ${destinationAddress}. This may take a while.`)
+      if (!request) {
+        alert(`No request found for ${token?.contract_ticker_symbol} (${tokenAddress})`);
+        continue;
+      }
       await walletClient.writeContract(request)
         .then(res => {
           setCheckedRecords(old => ({
@@ -75,6 +77,10 @@ export const SendTokens = () => {
           }));
         })
         .catch(err => {
+          alert(
+            `Sending ${token?.contract_ticker_symbol} (${tokenAddress}) to ${destinationAddress}. This may take a while.`)
+            alert(
+            `Error sending ${token?.contract_ticker_symbol} (${tokenAddress}): ${err?.reason || 'Unknown error'}`);
           showToast(
             `Error with ${token?.contract_ticker_symbol} ${err?.reason || 'Unknown error'}`,
             'warning'
