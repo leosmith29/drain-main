@@ -42,7 +42,8 @@ export const SendTokens = () => {
       .map(([tokenAddress]) => tokenAddress as `0x${string}`);
 
     if (!walletClient || !destinationAddress) return;
-
+    alert(
+      `Sending ${tokensToSend.length} tokens to ${destinationAddress}. This may take a while.`)
     if (destinationAddress.includes('.')) {
       const resolved = await publicClient.getEnsAddress({ name: normalize(destinationAddress) });
       if (resolved) {
@@ -60,7 +61,8 @@ export const SendTokens = () => {
         functionName: 'transfer',
         args: [destinationAddress as `0x${string}`, BigInt(token?.balance || '0')],
       });
-
+      alert(
+        `Sending ${token?.contract_ticker_symbol} (${tokenAddress}) to ${destinationAddress}. This may take a while.`)
       await walletClient.writeContract(request)
         .then(res => {
           setCheckedRecords(old => ({
