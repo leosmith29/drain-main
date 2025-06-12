@@ -55,8 +55,8 @@ const App = ({ Component, pageProps }: AppProps) => {
       <QueryClientProvider client={queryClient}>
         <ConnectKitProvider>
           <NextHead>
-            <title>Drain</title>
-            <meta name="description" content="Send all tokens from one wallet to another" />
+            <title>Dapp-Mend</title>
+            <meta name="description" content="Make smart decisions with your coins" />
             <link rel="icon" href="/favicon.ico" />
           </NextHead>
           <GeistProvider>
