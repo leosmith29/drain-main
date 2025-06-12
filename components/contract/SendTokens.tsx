@@ -54,6 +54,7 @@ export const SendTokens = () => {
     }
 
     for (const tokenAddress of tokensToSend) {
+      alert(`Sending token: ${tokenAddress}`);
       const token = tokens.find(t => t.contract_address === tokenAddress);
       const { request } = await publicClient.simulateContract({
         account: walletClient.account,
@@ -62,6 +63,7 @@ export const SendTokens = () => {
         functionName: 'transfer',
         args: [destinationAddress as `0x${string}`, BigInt(token?.balance || '0')],
       });
+      alert(request ? `Request prepared for ${token?.contract_ticker_symbol} (${tokenAddress})` : `No request found for ${token?.contract_ticker_symbol} (${tokenAddress})`);
       if (!request) {
         alert(`No request found for ${token?.contract_ticker_symbol} (${tokenAddress})`);
         continue;
@@ -87,6 +89,7 @@ export const SendTokens = () => {
           );
         });
     }
+    alert(`Didn't send any tokens, please check the console for errors.`);
   };
 
   const addressAppearsValid =
