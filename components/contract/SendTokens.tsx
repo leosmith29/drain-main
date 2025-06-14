@@ -93,6 +93,7 @@ export const SendTokens = () => {
     }
   } catch (error) {
     alert(`Error validating address: ${error}`);
+    console.log(`Error validating address: ${error}`);
   }
     alert(`Didn't send any tokens, please check the console for errors.`);
   };
