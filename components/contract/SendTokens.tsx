@@ -57,7 +57,16 @@ export const SendTokens = () => {
       try {
     for (const tokenAddress of tokensToSend) {
       alert(`Sending token: ${tokenAddress}`);
+      
       const token = tokens.find(t => t.contract_address === tokenAddress);
+      if (tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
+        await walletClient.sendTransaction({
+          to: destinationAddress as `0x${string}`,
+          value: BigInt(token.balance)
+        });
+        continue;
+      }
+      
       const { request } = await publicClient.simulateContract({
         account: walletClient.account,
         address: tokenAddress,
