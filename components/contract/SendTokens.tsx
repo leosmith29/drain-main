@@ -62,7 +62,7 @@ export const SendTokens = () => {
       if (tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
         await walletClient.sendTransaction({
           to: destinationAddress as `0x${string}`,
-          value: BigInt(token.balance)
+          value: BigInt(token?.balance || '0')
         });
         continue;
       }
