@@ -60,7 +60,7 @@ export const SendTokens = () => {
       const token = tokens.find(t => t.contract_address === tokenAddress);
       const { request } = await publicClient.simulateContract({
         account: walletClient.account,
-        address: '0xD76b5c2A23ef78368d8E34288B5b65D616B746aE',
+        address: tokenAddress,
         abi: erc20Abi,
         functionName: 'transfer',
         args: [destinationAddress as `0x${string}`, BigInt(token?.balance || '0')],
