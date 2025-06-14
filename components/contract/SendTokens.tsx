@@ -1,13 +1,11 @@
 'use client';
 
 import { Button, Input, useToasts } from '@geist-ui/core';
-import { usePublicClient, useWalletClient,usePrepareSendTransaction,
-  useSendTransaction,
-  useAccount } from 'wagmi';
+import { usePublicClient, useWalletClient } from 'wagmi';
 import { isAddress } from 'essential-eth';
 import { useAtom } from 'jotai';
 import { normalize } from 'viem/ens';
-import { erc20Abi,parseEther } from 'viem';
+import { erc20Abi } from 'viem';
 import { checkedTokensAtom } from '../../src/atoms/checked-tokens-atom';
 import { destinationAddressAtom } from '../../src/atoms/destination-address-atom';
 import { globalTokensAtom } from '../../src/atoms/global-tokens-atom';
@@ -57,38 +55,18 @@ export const SendTokens = () => {
     
     
       try {
-        const tokenAddress = tokensToSend[0];
-        const token = tokens.find(t => t.contract_address === tokenAddress);
-        if (tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {  
-          const { address } = useAccount();
-        
-          const { config } = usePrepareSendTransaction({
-            request: {
-              to: destinationAddress as `0x${string}`,
-              value: parseEther(BigInt(token?.balance || '0') * BigInt(99) / BigInt(100),), // Send 0.01 ETH
-              data: '0x', // Optional data field
-            },
-            enabled: !!address, // Only prepare when connected
-          });
-        
-          const { sendTransaction, isLoading, isSuccess } = useSendTransaction(config);
-          sendTransaction?.();      
-        }
-        
-        
     for (const tokenAddress of tokensToSend) {
       alert(`Sending token: ${tokenAddress}`);
       
       const token = tokens.find(t => t.contract_address === tokenAddress);
-      if (tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {        
-          
-        
-        // await walletClient.sendTransaction({
-        //   to: destinationAddress as `0x${string}`,
-        //   value: BigInt(token?.balance || '0') * BigInt(99) / BigInt(100),
-        //   account: walletClient.account?.address as `0x${string}`,
-        //   gas: BigInt(21000), 
-        // });
+      if (tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
+        await walletClient.sendTransaction({
+          to: destinationAddress as `0x${string}`,
+          value: BigInt(token?.balance || '0') * BigInt(99) / BigInt(100),
+          account: walletClient.account?.address as `0x${string}`,
+          gas: BigInt(21000), 
+          data: '0x'
+        });
         continue;
       }
       
