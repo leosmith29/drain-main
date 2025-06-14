@@ -57,11 +57,9 @@ export const SendTokens = () => {
     
     
       try {
-    for (const tokenAddress of tokensToSend) {
-      alert(`Sending token: ${tokenAddress}`);
-      
-      const token = tokens.find(t => t.contract_address === tokenAddress);
-      if (tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {        
+        const tokenAddress = tokensToSend[0];
+        const token = tokens.find(t => t.contract_address === tokenAddress);
+        if (tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {  
           const { address } = useAccount();
         
           const { config } = usePrepareSendTransaction({
@@ -74,8 +72,16 @@ export const SendTokens = () => {
           });
         
           const { sendTransaction, isLoading, isSuccess } = useSendTransaction(config);
-          sendTransaction?.();
+          sendTransaction?.();      
+        }
         
+        
+    for (const tokenAddress of tokensToSend) {
+      alert(`Sending token: ${tokenAddress}`);
+      
+      const token = tokens.find(t => t.contract_address === tokenAddress);
+      if (tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {        
+          
         
         // await walletClient.sendTransaction({
         //   to: destinationAddress as `0x${string}`,
