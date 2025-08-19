@@ -1,0 +1,23 @@
+diff --git a/node_modules/ox/core/Authorization.ts b/node_modules/ox/core/Authorization.ts
+index e69de29..1234567 100644
+--- a/node_modules/ox/core/Authorization.ts
++++ b/node_modules/ox/core/Authorization.ts
+@@ -269,12 +269,15 @@
+   const signature =
+     yParity && r && s ? Signature.fromTuple([yParity, r, s]) : undefined
+-  return from({
+-    address,
+-    chainId: chainId === '0x' ? 0 : Number(chainId),
+-    nonce: nonce === '0x' ? 0n : BigInt(nonce),
+-    r,
+-    s,
+-    yParity,
+-  })
++  return from({
++    address,
++    chainId: chainId === '0x' ? 0 : Number(chainId),   // number
++    nonce: nonce === '0x' ? 0n : BigInt(nonce),        // bigint
++    r: r ?? 0n,                                        // bigint
++    s: s ?? 0n,                                        // bigint
++    yParity: yParity ?? 0                              // number
++  })
