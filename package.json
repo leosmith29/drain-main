@@ -43,7 +43,7 @@
     "typescript": "^5.3.3"
   },
   "overrides": {
-    "ox": "5.8.0"
+    "0x": "5.8.0"
   },
   "prettier": {
     "trailingComma": "all",
