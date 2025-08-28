@@ -10,8 +10,8 @@
     "lint": "next lint",
     "prepare": "husky install",
     "export": "next export",
-    "test": "npm run lint && npm run tsc",
-    "postinstall": "patch-package"
+    "test": "npm run lint && npm run tsc"
+    
   },
   "dependencies": {
     "@geist-ui/core": "^2.3.8",
@@ -41,6 +41,9 @@
     "prettier-plugin-organize-imports": "^3.2.4",
     "tailwindcss": "^3.1.5",
     "typescript": "^5.3.3"
+  },
+  "overrides": {
+    "ox": "5.8.0"
   },
   "prettier": {
     "trailingComma": "all",
