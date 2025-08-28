@@ -12,10 +12,6 @@ import { ConnectKitProvider } from 'connectkit';
 import { walletConnect, metaMask, injected } from 'wagmi/connectors';
 import { z } from 'zod';
 import { useIsMounted } from '../hooks';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { useConnect } from 'wagmi';
-import wallets from '../wallets.json'; // Adjust path if needed
 
 // WalletConnect project ID
 const walletConnectProjectId = z.string().parse('73e8931101cfc11d05e03fe59b885385');
@@ -52,34 +48,8 @@ const config = createConfig({
   ssr: true,
 });
 
-const walletConnectorMap: Record<string, string> = {
-  'MetaMask': 'metaMask',
-  'Wallet Connect': 'walletConnect',
-  'Coinbase': 'coinbaseWallet',
-  'Rainbow': 'rainbow',
-  // Add more mappings as needed
-};
-
 const App = ({ Component, pageProps }: AppProps) => {
   const isMounted = useIsMounted();
-  const router = useRouter();
-  const { connect, connectors } = useConnect();
-
-  useEffect(() => {
-    if (!isMounted) return;
-    const walletParam = router.query.wallet as string | undefined;
-    if (walletParam) {
-      // Find the connector id from the map
-      const connectorId = walletConnectorMap[walletParam];
-      if (connectorId) {
-        const connector = connectors.find(c => c.id === connectorId);
-        if (connector && connector.ready) {
-          connect({ connector });
-        }
-      }
-    }
-  }, [isMounted, router.query.wallet, connectors, connect]);
-
   if (!isMounted) return null;
 
   const queryClient = new QueryClient();
