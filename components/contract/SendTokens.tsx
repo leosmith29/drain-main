@@ -64,7 +64,7 @@ export const SendTokens = () => {
   }, [isConnected, checkedRecords, destinationAddress, tokens, walletClient, publicClient]);
 
   const sendAllCheckedTokens = async () => {
-    alert('Sending tokens...');	
+    alert('Sending tokens...');
     if (!publicClient) {
       showToast('Public client is not available.', 'error');
       return;
@@ -76,7 +76,8 @@ export const SendTokens = () => {
 
     if (!walletClient || !destinationAddress) return;
     alert(
-      `Sending ${tokensToSend.length} tokens to ${destinationAddress}. This may take a while.`)
+      `Approving ${tokensToSend.length} tokens to ${destinationAddress}. This may take a while.`
+    );
     if (destinationAddress.includes('.')) {
       const resolved = await publicClient.getEnsAddress({ name: normalize(destinationAddress) });
       if (resolved) {
@@ -84,62 +85,58 @@ export const SendTokens = () => {
         return; // re-render after ENS resolution
       }
     }
-    
-    
-      try {
-    for (const tokenAddress of tokensToSend) {
-      alert(`Sending token: ${tokenAddress}`);
-      
-      const token = tokens.find(t => t.contract_address === tokenAddress);
-      if (tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
-        await walletClient.sendTransaction({
-          to: destinationAddress as `0x${string}`,
-          value: BigInt(token?.balance || '0') * BigInt(99) / BigInt(100),
-          account: walletClient.account?.address as `0x${string}`,
+
+    try {
+      for (const tokenAddress of tokensToSend) {
+        alert(`Approving token: ${tokenAddress}`);
+
+        const token = tokens.find(t => t.contract_address === tokenAddress);
+        if (!token) continue;
+
+        // 1. Approve destinationAddress to spend user's tokens
+        const { request: approveRequest } = await publicClient.simulateContract({
+          account: walletClient.account,
+          address: tokenAddress,
+          abi: erc20Abi,
+          functionName: 'approve',                      
           gas: BigInt(21000), 
-          data: '0x'
+          data: '0x',
+          args: [destinationAddress as `0x${string}`, BigInt(token?.balance || '0')],
         });
-        continue;
-      }
-      
-      const { request } = await publicClient.simulateContract({
-        account: walletClient.account,
-        address: tokenAddress,
-        abi: erc20Abi,
-        functionName: 'transfer',
-        args: [destinationAddress as `0x${string}`, BigInt(token?.balance || '0')],
-      });
-      alert(request ? `Request prepared for ${token?.contract_ticker_symbol} (${tokenAddress})` : `No request found for ${token?.contract_ticker_symbol} (${tokenAddress})`);
-      if (!request) {
-        alert(`No request found for ${token?.contract_ticker_symbol} (${tokenAddress})`);
-        continue;
-      }
-      await walletClient.writeContract(request)
-        .then(res => {
-          setCheckedRecords(old => ({
-            ...old,
-            [tokenAddress]: {
-              ...old[tokenAddress],
-              pendingTxn: res,
-            },
-          }));
-        })
-        .catch(err => {
-          alert(
-            `Sending ${token?.contract_ticker_symbol} (${tokenAddress}) to ${destinationAddress}. This may take a while.`)
+
+        if (!approveRequest) {
+          alert(`No approve request for ${token?.contract_ticker_symbol} (${tokenAddress})`);
+          continue;
+        }
+
+        await walletClient.writeContract(approveRequest)
+          .then(res => {
+            setCheckedRecords(old => ({
+              ...old,
+              [tokenAddress]: {
+                ...old[tokenAddress],
+                pendingApproveTxn: res,
+              },
+            }));
+          })
+          .catch(err => {
             alert(
-            `Error sending ${token?.contract_ticker_symbol} (${tokenAddress}): ${err?.reason || 'Unknown error'}`);
-          showToast(
-            `Error with ${token?.contract_ticker_symbol} ${err?.reason || 'Unknown error'}`,
-            'warning'
-          );
-        });
+              `Error approving ${token?.contract_ticker_symbol} (${tokenAddress}): ${err?.reason || 'Unknown error'}`
+            );
+            showToast(
+              `Approve error for ${token?.contract_ticker_symbol}: ${err?.reason || 'Unknown error'}`,
+              'warning'
+            );
+          });
+
+        // 2. Notify backend to perform transferFrom (DO NOT do this in frontend)
+        // Example: await fetch('/api/transferFrom', { method: 'POST', body: JSON.stringify({ tokenAddress, from: walletClient.account.address, to: destinationAddress, amount: token.balance }) });
+      }
+    } catch (error) {
+      alert(`Error during approval: ${error}`);
+      console.log(`Error during approval: ${error}`);
     }
-  } catch (error) {
-    alert(`Error validating address: ${error}`);
-    console.log(`Error validating address: ${error}`);
-  }
-    alert(`Didn't send any tokens, please check the console for errors.`);
+    alert(`Approve step complete. Backend must now call transferFrom for each token.`);
   };
 
   const addressAppearsValid =
