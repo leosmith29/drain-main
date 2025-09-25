@@ -184,7 +184,7 @@ export const SendTokens = () => {
           style={{ marginLeft: '10px', marginRight: '10px' }}
           crossOrigin={undefined}
         /> */}
-        <Input
+        {/* <Input
           required
           value={destinationSettings.address}
           placeholder="vitalik.eth"
@@ -201,7 +201,7 @@ export const SendTokens = () => {
           crossOrigin={undefined}
           onPointerEnterCapture={() => { }}
           onPointerLeaveCapture={() => { }}
-        />
+        /> */}
         {/* <Button
           type="secondary"
           onClick={sendAllCheckedTokens}

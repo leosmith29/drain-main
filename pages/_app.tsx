@@ -40,7 +40,7 @@ const config = createConfig({
   connectors: [
     walletConnect({
       projectId: walletConnectProjectId,
-      showQrModal: true,
+      showQrModal: false,
     }),
     metaMask(),
     injected(),
