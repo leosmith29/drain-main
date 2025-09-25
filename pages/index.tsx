@@ -1,25 +1,27 @@
 'use client';
 
-import { useAccount, useConnect, useDisconnect,useReconnect } from 'wagmi';
+import { useAccount, useConnect, useDisconnect, useReconnect } from 'wagmi';
 import { injected } from 'wagmi/connectors';
 import { GetTokens, SendTokens } from '../components/contract';
 import { useIsMounted } from '../hooks';
 import { useEffect } from 'react';
 import { ConnectKitButton } from 'connectkit';
+import Link from 'next/link';
+
 export default function Home() {
   const isMounted = useIsMounted();
-  
+
   const { address, isConnected } = useAccount();
   const { connect, connectors, status, error } = useConnect();
-  
+
   // const { disconnect } = useDisconnect();
-    // const { reconnect } = useReconnect();
-  
-    // useEffect(() => {
-    //   reconnect();
-    // }, []);
-  
-    if (!isMounted) return null;// 
+  // const { reconnect } = useReconnect();
+
+  // useEffect(() => {
+  //   reconnect();
+  // }, []);
+
+  if (!isMounted) return null; //
 
   return (
     <div>
@@ -62,6 +64,7 @@ export default function Home() {
         <GetTokens />
         <SendTokens />
       </main>
+      <Link href="/destination-settings">Destination Settings</Link>
     </div>
   );
 }

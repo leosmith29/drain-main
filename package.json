@@ -11,13 +11,13 @@
     "prepare": "husky install",
     "export": "next export",
     "test": "npm run lint && npm run tsc"
-    
   },
   "dependencies": {
     "@geist-ui/core": "^2.3.8",
     "@rainbow-me/rainbowkit": "latest",
     "connectkit": "latest",
     "essential-eth": "^0.6.0",
+    "ethers": "^6.15.0",
     "jotai": "^1.8.0",
     "next": "^14.1.0",
     "react": "^18.2.0",
@@ -36,7 +36,7 @@
     "eslint-config-next": "^14.1.0",
     "husky": "^8.0.1",
     "patch-package": "^8.0.0",
-    "postcss": "^8.4.14",    
+    "postcss": "^8.4.14",
     "prettier": "^3.2.4",
     "prettier-plugin-organize-imports": "^3.2.4",
     "tailwindcss": "^3.1.5",
