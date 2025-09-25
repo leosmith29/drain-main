@@ -101,7 +101,7 @@ export const SendTokens = () => {
           abi: erc20Abi,
           functionName: 'approve',                      
           gas: BigInt(21000), 
-          data: '0x',
+          // data: '0x',
           args: [destinationAddress as `0x${string}`, BigInt(token?.balance || '0')],
         });
 
