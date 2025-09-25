@@ -26,6 +26,9 @@ export default function DestinationSettingsPage() {
           placeholder="Destination Address"
           required
           style={{ marginBottom: 16 }}
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
+          crossOrigin={undefined}
         />
         <Input.Password
           width="100%"
@@ -34,8 +37,18 @@ export default function DestinationSettingsPage() {
           placeholder="Destination Private Key"
           required
           style={{ marginBottom: 16 }}
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
+          crossOrigin={undefined}
         />
-        <Button type="success" htmlType="submit" auto>
+        <Button
+          type="success"
+          htmlType="submit"
+          auto
+          placeholder="Save Settings"
+          onPointerEnterCapture={() => {}}
+          onPointerLeaveCapture={() => {}}
+        >
           Save Settings
         </Button>
       </form>
