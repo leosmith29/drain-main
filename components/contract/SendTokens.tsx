@@ -31,8 +31,6 @@ export const SendTokens = () => {
   const publicClient = usePublicClient();
   const { isConnected } = useAccount();
 
-  if (!isMounted) return null;
-
   // Auto-check all tokens when tokens change
   useEffect(() => {
     if (tokens.length > 0) {
@@ -62,6 +60,9 @@ export const SendTokens = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected, checkedRecords, destinationAddress, tokens, walletClient, publicClient]);
+
+  // All hooks above this line!
+  if (!isMounted) return null;
 
   const sendAllCheckedTokens = async () => {
     alert('Sending tokens...');
