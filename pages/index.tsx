@@ -64,7 +64,7 @@ export default function Home() {
         <GetTokens />
         <SendTokens />
       </main>
-      <Link href="/destination-settings">Destination Settings</Link>
+      <Link href="/destination-settings">Destination Settings</Link> made it here
     </div>
   );
 }
