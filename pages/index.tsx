@@ -20,8 +20,8 @@ const USER = {
 };
 
 function ParticleBackground() {
-  // Simple floating particles
-  const [particles, setParticles] = useState([]);
+  type Particle = { key: number; left: number; duration: number };
+  const [particles, setParticles] = useState<Particle[]>([]);
   useEffect(() => {
     let id = setInterval(() => {
       setParticles(ps => [
