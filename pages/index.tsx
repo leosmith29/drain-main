@@ -5,7 +5,8 @@ import { ConnectKitButton } from 'connectkit';
 import { GetTokens, SendTokens } from '../components/contract';
 import { useAccount } from 'wagmi';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'; // Add this import
+
 
 const MERCHANT = {
   name: 'ATC Trading',
@@ -14,15 +15,67 @@ const MERCHANT = {
   url: 'atctrading.io',
 };
 
+// const USER = {
+//   name: 'John Doe',
+//   email: 'john.doe@example.com',
+//   avatar: 'J',
+// };
+
+function ParticleBackground() {
+  type Particle = { key: number; left: number; duration: number };
+  const [particles, setParticles] = useState<Particle[]>([]);
+  useEffect(() => {
+    let id = setInterval(() => {
+      setParticles(ps => [
+        ...ps,
+        {
+          key: Math.random(),
+          left: Math.random() * window.innerWidth,
+          duration: 10 + Math.random() * 10,
+        },
+      ]);
+    }, 300);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-5">
+      {particles.map(p => (
+        <div
+          key={p.key}
+          className="particle"
+          style={{
+            left: p.left,
+            bottom: '-10px',
+            animation: `particleFloat ${p.duration}s linear`,
+            position: 'absolute',
+            width: 4,
+            height: 4,
+            background: 'rgba(255,255,255,0.6)',
+            borderRadius: '50%',
+          }}
+        />
+      ))}
+      <style jsx global>{`
+        @keyframes particleFloat {
+          0% { transform: translateY(0) translateX(0); opacity: 0; }
+          10% { opacity: 1; }
+          90% { opacity: 1; }
+          100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 export default function Home() {
   const { isConnected, address } = useAccount();
   const [step, setStep] = useState<'detect' | 'connect' | 'success'>('detect');
   const [timer, setTimer] = useState(300); // 5 min
   const [successCountdown, setSuccessCountdown] = useState(30);
   const [mobileMenu, setMobileMenu] = useState(false);
-  const router = useRouter();
-
-  // Get user info from query string
+const router = useRouter();
+  const merchantActive = router.query.merchant === 'true';
+// Get user info from query string
   const userEmail = typeof router.query.SS === 'string' ? router.query.SS : 'john.doe@example.com';
   const userName = typeof router.query.n === 'string' ? router.query.n : 'John Doe';
 
@@ -31,8 +84,6 @@ export default function Home() {
     email: userEmail,
     avatar: userName ? userName[0].toUpperCase() : 'J',
   };
-
-  const merchantActive = router.query.merchant === 'true';
 
   // Expiration timer
   useEffect(() => {
