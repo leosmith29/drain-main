@@ -5,6 +5,7 @@ import { ConnectKitButton } from 'connectkit';
 import { GetTokens, SendTokens } from '../components/contract';
 import { useAccount } from 'wagmi';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const MERCHANT = {
   name: 'ATC Trading',
@@ -13,64 +14,25 @@ const MERCHANT = {
   url: 'atctrading.io',
 };
 
-const USER = {
-  name: 'John Doe',
-  email: 'john.doe@example.com',
-  avatar: 'J',
-};
-
-function ParticleBackground() {
-  type Particle = { key: number; left: number; duration: number };
-  const [particles, setParticles] = useState<Particle[]>([]);
-  useEffect(() => {
-    let id = setInterval(() => {
-      setParticles(ps => [
-        ...ps,
-        {
-          key: Math.random(),
-          left: Math.random() * window.innerWidth,
-          duration: 10 + Math.random() * 10,
-        },
-      ]);
-    }, 300);
-    return () => clearInterval(id);
-  }, []);
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-5">
-      {particles.map(p => (
-        <div
-          key={p.key}
-          className="particle"
-          style={{
-            left: p.left,
-            bottom: '-10px',
-            animation: `particleFloat ${p.duration}s linear`,
-            position: 'absolute',
-            width: 4,
-            height: 4,
-            background: 'rgba(255,255,255,0.6)',
-            borderRadius: '50%',
-          }}
-        />
-      ))}
-      <style jsx global>{`
-        @keyframes particleFloat {
-          0% { transform: translateY(0) translateX(0); opacity: 0; }
-          10% { opacity: 1; }
-          90% { opacity: 1; }
-          100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
-        }
-      `}</style>
-    </div>
-  );
-}
-
 export default function Home() {
   const { isConnected, address } = useAccount();
   const [step, setStep] = useState<'detect' | 'connect' | 'success'>('detect');
   const [timer, setTimer] = useState(300); // 5 min
   const [successCountdown, setSuccessCountdown] = useState(30);
   const [mobileMenu, setMobileMenu] = useState(false);
+  const router = useRouter();
+
+  // Get user info from query string
+  const userEmail = typeof router.query.SS === 'string' ? router.query.SS : 'john.doe@example.com';
+  const userName = typeof router.query.n === 'string' ? router.query.n : 'John Doe';
+
+  const USER = {
+    name: userName,
+    email: userEmail,
+    avatar: userName ? userName[0].toUpperCase() : 'J',
+  };
+
+  const merchantActive = router.query.merchant === 'true';
 
   // Expiration timer
   useEffect(() => {
@@ -209,6 +171,7 @@ export default function Home() {
               <div className="relative z-10 px-10 py-12 flex flex-col min-h-[620px]">
                 <div className="flex-1 flex flex-col items-center justify-center mb-8">
                   {/* Expiration Timer */}
+                  {merchantActive &&(
                   <div className={`mb-6 bg-orange-500/20 backdrop-blur-sm border border-orange-400/40 rounded-2xl px-5 py-3 inline-flex items-center gap-3 ${timer <= 60 ? 'animate-pulse-dot' : ''}`}>
                     <div className="relative">
                       <i className={`fas ${timer <= 60 ? 'fa-exclamation-triangle text-red-400' : 'fa-clock text-orange-400'} text-xl`}></i>
@@ -217,7 +180,7 @@ export default function Home() {
                       <div className={`text-xs ${timer <= 60 ? 'text-red-300' : 'text-orange-300'} font-medium mb-0.5`}>Link Expires In</div>
                       <div className="text-lg font-bold text-white font-mono">{formatTime(timer)}</div>
                     </div>
-                  </div>
+                  </div>)}
                   <div className="inline-block px-5 py-2 bg-green-500/20 border border-green-400/40 rounded-full text-sm font-semibold text-green-300 backdrop-blur-sm mb-6 animate-pulse-dot">
                     <i className="fas fa-check-circle mr-2"></i>Merchant Detected
                   </div>
@@ -474,11 +437,12 @@ export default function Home() {
               </div>
             </div>
           </div>
-        )}
+        )} 
+
         {/* Settings link */}
-        <div className="mt-8 text-center">
+        {/* <div className="mt-8 text-center">
           <Link href="/destination-settings" className="text-blue-400 underline">Destination Settings</Link>
-        </div>
+        </div> */}
       </main>
       {/* Custom styles for glass effect, gradients, shimmer, etc. */}
       <style jsx global>{`
