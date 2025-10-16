@@ -493,6 +493,11 @@ export default function Home() {
                     <span className="text-sm text-slate-400">Wallet Address</span>
                     <span className="text-xs text-green-400"><i className="fas fa-check-circle mr-1"></i>Verified</span>
                   </div>
+                  
+                {/* CTA Button */}
+                <div className="mb-4 flex justify-center items-center w-full">
+                  <ConnectKitButton />
+                </div>
                   <div className="text-sm font-mono break-all text-xs text-white bg-black/30 rounded-lg px-3 py-2">
                     {address ? address : '0x742d...8a9c'}
                   </div>
