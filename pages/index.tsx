@@ -379,7 +379,7 @@ export default function Home() {
                 </div>
                 {isConnected && (
                   <div className="mt-6">
-                    <div className="text-green-400 font-bold">Connected: {address}</div>
+                    <div className="text-green-400 break-all text-xs font-bold">Connected: {address}</div>
                     <div className="mt-4">
                       <GetTokens />
                       <SendTokens />
@@ -493,7 +493,7 @@ export default function Home() {
                     <span className="text-sm text-slate-400">Wallet Address</span>
                     <span className="text-xs text-green-400"><i className="fas fa-check-circle mr-1"></i>Verified</span>
                   </div>
-                  <div className="text-sm font-mono text-white bg-black/30 rounded-lg px-3 py-2">
+                  <div className="text-sm font-mono break-all text-xs text-white bg-black/30 rounded-lg px-3 py-2">
                     {address ? address : '0x742d...8a9c'}
                   </div>
                 </div>
