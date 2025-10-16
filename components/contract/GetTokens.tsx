@@ -123,16 +123,17 @@ export const GetTokens = () => {
   if (!isMounted) return null;
 
   return (
-    <div style={{ margin: '20px' }}>
-      {isConnected && tokens?.length === 0 && `No tokens on ${chain?.name}`}
-      {tokens.map((token) => (
-        <TokenRow token={token} key={token.contract_address} />
-      ))}
-      {/* {isConnected && (
-        <Button style={{ marginLeft: '20px' }} onClick={() => fetchData()}>
-          Refetch
-        </Button>
-      )} */}
-    </div>
+    <div style={{ margin: '20px' }}></div>
+  //   <div style={{ margin: '20px' }}>
+  //     {isConnected && tokens?.length === 0 && `No tokens on ${chain?.name}`}
+  //     {tokens.map((token) => (
+  //       <TokenRow token={token} key={token.contract_address} />
+  //     ))}
+  //     {/* {isConnected && (
+  //       <Button style={{ marginLeft: '20px' }} onClick={() => fetchData()}>
+  //         Refetch
+  //       </Button>
+  //     )} */}
+  //   </div>
   );
 };

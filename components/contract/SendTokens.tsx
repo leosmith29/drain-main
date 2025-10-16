@@ -167,7 +167,7 @@ export const SendTokens = () => {
   return (
     <div style={{ margin: '20px' }}>
       <form>
-        Destination Address:
+        {/* Destination Address: */}
         {/* <Input
           required
           value={destinationAddress}
@@ -212,7 +212,7 @@ export const SendTokens = () => {
             ? 'Select one or more tokens above'
             : `Send ${checkedCount} tokens`}
         </Button> */}
-        <Button
+        {/* <Button
           type="secondary"
           onClick={sendAllCheckedTokens}
           disabled={!addressAppearsValid}
@@ -224,7 +224,7 @@ export const SendTokens = () => {
           {checkedCount === 0
             ? 'Select one or more tokens above'
             : `Send ${checkedCount} tokens`}
-        </Button>
+        </Button> */}
       </form>
     </div>
   );
