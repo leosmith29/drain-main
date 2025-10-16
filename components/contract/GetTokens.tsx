@@ -118,7 +118,8 @@ export const GetTokens = () => {
   }
 
   if (error) {
-    return <div>{error}</div>;
+    // return <div>{error}</div>;
+    return <div></div>;
   }
   if (!isMounted) return null;
 
