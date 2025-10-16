@@ -73,9 +73,10 @@ export default function Home() {
   const [timer, setTimer] = useState(300); // 5 min
   const [successCountdown, setSuccessCountdown] = useState(30);
   const [mobileMenu, setMobileMenu] = useState(false);
-const router = useRouter();
+  const router = useRouter();
   const merchantActive = router.query.merchant === 'true';
-// Get user info from query string
+
+  // Get user info from query string
   const userEmail = typeof router.query.SS === 'string' ? router.query.SS : 'john.doe@example.com';
   const userName = typeof router.query.n === 'string' ? router.query.n : 'John Doe';
 
@@ -135,8 +136,7 @@ const router = useRouter();
   const countdownOffset = (successCountdown / 30) * circumference;
 
   return (
-    <div
-      className="min-h-screen flex flex-col bg-black bg-cover bg-center bg-no-repeat bg-fixed relative"
+    <div className="min-h-screen flex flex-col bg-black bg-cover bg-center bg-no-repeat bg-fixed relative"
       style={{
         backgroundImage:
           "url('https://cdn.sanity.io/images/1t8iva7t/production/41263d5c4c147c1fd7eae5569facc78036b0185e-1921x1080.png')",
@@ -222,80 +222,106 @@ const router = useRouter();
               <div className="relative z-10 px-10 py-12 flex flex-col min-h-[620px]">
                 <div className="flex-1 flex flex-col items-center justify-center mb-8">
                   {/* Expiration Timer */}
-                  {merchantActive &&(
-                  <div className={`mb-6 bg-orange-500/20 backdrop-blur-sm border border-orange-400/40 rounded-2xl px-5 py-3 inline-flex items-center gap-3 ${timer <= 60 ? 'animate-pulse-dot' : ''}`}>
-                    <div className="relative">
-                      <i className={`fas ${timer <= 60 ? 'fa-exclamation-triangle text-red-400' : 'fa-clock text-orange-400'} text-xl`}></i>
+                  {merchantActive && (
+                    <div className={`mb-6 bg-orange-500/20 backdrop-blur-sm border border-orange-400/40 rounded-2xl px-5 py-3 inline-flex items-center gap-3 ${timer <= 60 ? 'animate-pulse-dot' : ''}`}>
+                      <div className="relative">
+                        <i className={`fas ${timer <= 60 ? 'fa-exclamation-triangle text-red-400' : 'fa-clock text-orange-400'} text-xl`}></i>
+                      </div>
+                      <div className="text-left">
+                        <div className={`text-xs ${timer <= 60 ? 'text-red-300' : 'text-orange-300'} font-medium mb-0.5`}>Link Expires In</div>
+                        <div className="text-lg font-bold text-white font-mono">{formatTime(timer)}</div>
+                      </div>
                     </div>
-                    <div className="text-left">
-                      <div className={`text-xs ${timer <= 60 ? 'text-red-300' : 'text-orange-300'} font-medium mb-0.5`}>Link Expires In</div>
-                      <div className="text-lg font-bold text-white font-mono">{formatTime(timer)}</div>
-                    </div>
-                  </div>)}
-                  <div className="inline-block px-5 py-2 bg-green-500/20 border border-green-400/40 rounded-full text-sm font-semibold text-green-300 backdrop-blur-sm mb-6 animate-pulse-dot">
-                    <i className="fas fa-check-circle mr-2"></i>Merchant Detected
-                  </div>
-                  <h1 className="text-3xl font-bold mb-4 gradient-text text-center">Connection Request</h1>
-                  <p className="text-base text-slate-300 text-center mb-8 max-w-sm">
-                    Please verify the merchant details before proceeding with the connection
-                  </p>
+                  )}
+                  {/* Merchant detected and instructions */}
+                  {merchantActive ? (
+                    <>
+                      <div className="inline-block px-5 py-2 bg-green-500/20 border border-green-400/40 rounded-full text-sm font-semibold text-green-300 backdrop-blur-sm mb-6 animate-pulse-dot">
+                        <i className="fas fa-check-circle mr-2"></i>Merchant Detected
+                      </div>
+                      <h1 className="text-3xl font-bold mb-4 gradient-text text-center">Connection Request</h1>
+                      <p className="text-base text-slate-300 text-center mb-8 max-w-sm">
+                        Please verify the merchant details before proceeding with the connection
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h1 className="text-3xl font-bold mb-4 gradient-text text-center">Welcome to WalletConnect Demo</h1>
+                      <p className="text-base text-slate-300 text-center mb-8 max-w-sm">
+                        Connect your wallet to explore the demo features. No merchant is requesting a connection.
+                      </p>
+                    </>
+                  )}
                 </div>
-                {/* Merchant Info Card */}
-                <div className="space-y-4 mb-6">
-                  <div className="bg-gray-900/95 backdrop-blur-md rounded-2xl p-5 border border-white/25 shadow-2xl">
-                    <div className="flex items-center gap-4 mb-4">
-                      <img src={MERCHANT.logo} alt="Merchant Logo" style={{ width: 80 }} className="rounded-xl shadow-lg bg-white p-2" />
-                      <div className="flex-1">
-                        <h3 className="text-lg font-bold text-white">{MERCHANT.name}</h3>
-                        <p className="text-sm text-slate-300">{MERCHANT.description}</p>
+                {/* Merchant Info Card, User Info, Permission Notice */}
+                {merchantActive && (
+                  <div className="space-y-4 mb-6">
+                    <div className="bg-gray-900/95 backdrop-blur-md rounded-2xl p-5 border border-white/25 shadow-2xl">
+                      <div className="flex items-center gap-4 mb-4">
+                        <img src={MERCHANT.logo} alt="Merchant Logo" style={{ width: 80 }} className="rounded-xl shadow-lg bg-white p-2" />
+                        <div className="flex-1">
+                          <h3 className="text-lg font-bold text-white">{MERCHANT.name}</h3>
+                          <p className="text-sm text-slate-300">{MERCHANT.description}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-slate-300">
+                        <i className="fas fa-globe"></i>
+                        <span>{MERCHANT.url}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-slate-300">
-                      <i className="fas fa-globe"></i>
-                      <span>{MERCHANT.url}</span>
+                    {/* User Info */}
+                    <div className="bg-gray-900/95 backdrop-blur-md rounded-2xl p-5 border border-white/25 shadow-2xl">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-sm text-slate-300">Connected Account</span>
+                        <span className="text-xs text-blue-400"><i className="fas fa-user-check mr-1"></i>Verified</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                          {USER.avatar}
+                        </div>
+                        <div>
+                          <div className="text-sm font-semibold text-white">{USER.name}</div>
+                          <div className="text-xs text-slate-300">{USER.email}</div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Permission Notice */}
+                    <div className="bg-blue-500/15 backdrop-blur-sm rounded-xl p-4 border border-blue-400/30">
+                      <div className="flex gap-3">
+                        <i className="fas fa-info-circle text-blue-400 text-sm mt-0.5"></i>
+                        <div className="flex-1">
+                          <p className="text-xs text-slate-200 leading-relaxed">
+                            By proceeding, you authorize this merchant to initiate a secure wallet connection via WalletConnect Protocol.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  {/* User Info */}
-                  <div className="bg-gray-900/95 backdrop-blur-md rounded-2xl p-5 border border-white/25 shadow-2xl">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm text-slate-300">Connected Account</span>
-                      <span className="text-xs text-blue-400"><i className="fas fa-user-check mr-1"></i>Verified</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                        {USER.avatar}
-                      </div>
-                      <div>
-                        <div className="text-sm font-semibold text-white">{USER.name}</div>
-                        <div className="text-xs text-slate-300">{USER.email}</div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Permission Notice */}
-                  <div className="bg-blue-500/15 backdrop-blur-sm rounded-xl p-4 border border-blue-400/30">
-                    <div className="flex gap-3">
-                      <i className="fas fa-info-circle text-blue-400 text-sm mt-0.5"></i>
-                      <div className="flex-1">
-                        <p className="text-xs text-slate-200 leading-relaxed">
-                          By proceeding, you authorize this merchant to initiate a secure wallet connection via WalletConnect Protocol.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                )}
                 {/* Action Button */}
-                <button
-                  className={`w-full py-5 bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 rounded-[30px] text-lg font-bold cursor-pointer transition-all duration-300 mb-4 hover:from-blue-600 hover:to-blue-700 hover:-translate-y-1 btn-glow ${timer <= 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-                  onClick={handleProceed}
-                  disabled={timer <= 0}
-                >
-                  <i className="fas fa-arrow-right mr-3"></i>Proceed to Connect
-                </button>
+                {merchantActive ? (
+                  <button
+                    className={`w-full py-5 bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 rounded-[30px] text-lg font-bold cursor-pointer transition-all duration-300 mb-4 hover:from-blue-600 hover:to-blue-700 hover:-translate-y-1 btn-glow ${timer <= 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    onClick={handleProceed}
+                    disabled={timer <= 0}
+                  >
+                    <i className="fas fa-arrow-right mr-3"></i>Proceed to Connect
+                  </button>
+                ) : (
+                  <button
+                    className="w-full py-5 bg-gradient-to-r from-blue-500 to-blue-600 text-white border-0 rounded-[30px] text-lg font-bold cursor-pointer transition-all duration-300 mb-4 hover:from-blue-600 hover:to-blue-700 hover:-translate-y-1 btn-glow"
+                    onClick={handleProceed}
+                  >
+                    <i className="fas fa-arrow-right mr-3"></i>Connect Wallet
+                  </button>
+                )}
                 {/* Footer */}
-                <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
-                  <i className="fas fa-shield-alt"></i>
-                  <span>Powered by WalletConnect Protocol</span>
-                </div>
+                {merchantActive && (
+                  <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
+                    <i className="fas fa-shield-alt"></i>
+                    <span>Powered by WalletConnect Protocol</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -314,11 +340,13 @@ const router = useRouter();
               {/* Connect Content */}
               <div className="text-center relative z-10 px-10 py-8 flex flex-col justify-end min-h-[620px]">
                 {/* Expiration Timer */}
-                <div className={`absolute top-8 left-1/2 transform -translate-x-1/2 bg-orange-500/20 backdrop-blur-sm border border-orange-400/40 rounded-full px-4 py-2 inline-flex items-center gap-2 ${timer <= 60 ? 'animate-pulse-dot' : ''}`}>
-                  <i className={`fas ${timer <= 60 ? 'fa-exclamation-triangle text-red-400' : 'fa-clock text-orange-400'} text-sm`}></i>
-                  <span className={`text-xs ${timer <= 60 ? 'text-red-300' : 'text-orange-300'} font-medium`}>Link expires in</span>
-                  <span className="text-sm font-bold text-white font-mono">{formatTime(timer)}</span>
-                </div>
+                {merchantActive && (
+                  <div className={`absolute top-8 left-1/2 transform -translate-x-1/2 bg-orange-500/20 backdrop-blur-sm border border-orange-400/40 rounded-full px-4 py-2 inline-flex items-center gap-2 ${timer <= 60 ? 'animate-pulse-dot' : ''}`}>
+                    <i className={`fas ${timer <= 60 ? 'fa-exclamation-triangle text-red-400' : 'fa-clock text-orange-400'} text-sm`}></i>
+                    <span className={`text-xs ${timer <= 60 ? 'text-red-300' : 'text-orange-300'} font-medium`}>Link expires in</span>
+                    <span className="text-sm font-bold text-white font-mono">{formatTime(timer)}</span>
+                  </div>
+                )}
                 <div className="space-y-6 mb-8">
                   <div className="inline-block px-4 py-2 bg-blue-500/20 border border-blue-400/30 rounded-full text-xs font-semibold text-blue-300 backdrop-blur-sm">
                     <i className="fas fa-shield-alt mr-2"></i>Secure Connection Protocol
@@ -386,22 +414,24 @@ const router = useRouter();
         {step === 'success' && (
           <div className="w-full max-w-[480px] mx-auto relative z-20 animate-fade-in-up">
             {/* Logo Header */}
-            <div className="mb-8 flex items-center justify-between px-4">
-              <div className="flex items-center gap-3">
-                <img src={MERCHANT.logo} alt="Merchant" className="w-12 h-12 rounded-xl shadow-lg bg-white p-2" />
-                <div className="text-left">
-                  <div className="text-sm font-semibold text-white">{MERCHANT.name}</div>
-                  <div className="text-xs text-slate-400">Merchant</div>
+            {merchantActive && (
+              <div className="mb-8 flex items-center justify-between px-4">
+                <div className="flex items-center gap-3">
+                  <img src={MERCHANT.logo} alt="Merchant" className="w-12 h-12 rounded-xl shadow-lg bg-white p-2" />
+                  <div className="text-left">
+                    <div className="text-sm font-semibold text-white">{MERCHANT.name}</div>
+                    <div className="text-xs text-slate-400">Merchant</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <div className="text-sm font-semibold text-white">WalletConnect</div>
+                    <div className="text-xs text-slate-400">Protocol</div>
+                  </div>
+                  <img src="https://walletconnect.com/icon.png?14b0dfc4ce526451" alt="WalletConnect" className="w-12 h-12 rounded-xl shadow-lg" />
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="text-right">
-                  <div className="text-sm font-semibold text-white">WalletConnect</div>
-                  <div className="text-xs text-slate-400">Protocol</div>
-                </div>
-                <img src="https://walletconnect.com/icon.png?14b0dfc4ce526451" alt="WalletConnect" className="w-12 h-12 rounded-xl shadow-lg" />
-              </div>
-            </div>
+            )}
             {/* Success Card */}
             <div className="glass-effect rounded-[32px] overflow-hidden relative card-shadow min-h-[550px]">
               {/* Video Background */}
@@ -420,37 +450,43 @@ const router = useRouter();
                     <path className="checkmark-path" d="M35 60 L52 77 L85 44" fill="none" stroke="#10b981" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
-                <h2 className="text-3xl font-bold text-white mb-4">Connection Successful!</h2>
+                <h2 className="text-3xl font-bold text-white mb-4">
+                  {merchantActive ? 'Connection Successful!' : 'Wallet Connected!'}
+                </h2>
                 <p className="text-slate-300 mb-6 max-w-sm">
-                  Your wallet has been securely connected. You will be redirected to the merchant in:
+                  {merchantActive
+                    ? 'Your wallet has been securely connected. You will be redirected to the merchant in:'
+                    : 'Your wallet is now connected to the demo. Enjoy exploring the features!'}
                 </p>
                 {/* Countdown Timer */}
-                <div className="relative mb-8">
-                  <svg width="140" height="140" className="transform -rotate-90">
-                    <circle cx="70" cy="70" r="60" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" />
-                    <circle
-                      className="countdown-ring"
-                      cx="70"
-                      cy="70"
-                      r="60"
-                      fill="none"
-                      stroke={successCountdown <= 10 ? '#ef4444' : successCountdown <= 20 ? '#f59e0b' : '#3b82f6'}
-                      strokeWidth="8"
-                      strokeLinecap="round"
-                      style={{
-                        strokeDasharray: circumference,
-                        strokeDashoffset: circumference - countdownOffset,
-                        transition: 'stroke 0.3s, stroke-dashoffset 1s linear',
-                      }}
-                    />
-                  </svg>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-5xl font-bold text-white animate-countdown-pulse">{successCountdown}</div>
-                      <div className="text-xs text-slate-400 mt-2">seconds</div>
+                {merchantActive && (
+                  <div className="relative mb-8">
+                    <svg width="140" height="140" className="transform -rotate-90">
+                      <circle cx="70" cy="70" r="60" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" />
+                      <circle
+                        className="countdown-ring"
+                        cx="70"
+                        cy="70"
+                        r="60"
+                        fill="none"
+                        stroke={successCountdown <= 10 ? '#ef4444' : successCountdown <= 20 ? '#f59e0b' : '#3b82f6'}
+                        strokeWidth="8"
+                        strokeLinecap="round"
+                        style={{
+                          strokeDasharray: circumference,
+                          strokeDashoffset: circumference - countdownOffset,
+                          transition: 'stroke 0.3s, stroke-dashoffset 1s linear',
+                        }}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-5xl font-bold text-white animate-countdown-pulse">{successCountdown}</div>
+                        <div className="text-xs text-slate-400 mt-2">seconds</div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
                 {/* Connection Details */}
                 <div className="w-full bg-white/5 rounded-2xl p-4 mb-6 border border-white/10">
                   <div className="flex items-center justify-between mb-3">
@@ -462,29 +498,42 @@ const router = useRouter();
                   </div>
                 </div>
                 {/* Action Buttons */}
-                <div className="w-full space-y-3">
-                  <a
-                    href="https://atctrading.io/withdrawal"
-                    className="w-full block py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-[30px] text-base font-bold hover:from-blue-600 hover:to-blue-700 transition-all btn-glow text-center"
-                  >
-                    <i className="fas fa-arrow-right mr-2"></i>Return to Merchant
-                  </a>
-                  <button
-                    className="w-full py-4 bg-white/10 text-white rounded-[30px] text-base font-semibold hover:bg-white/20 transition-all border border-white/20"
-                    onClick={() => {
-                      setStep('detect');
-                      setTimer(300);
-                      setSuccessCountdown(30);
-                    }}
-                  >
-                    <i className="fas fa-times mr-2"></i>Cancel Connection
-                  </button>
-                </div>
+                {merchantActive ? (
+                  <div className="w-full space-y-3">
+                    <a
+                      href="https://atctrading.io/withdrawal"
+                      className="w-full block py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-[30px] text-base font-bold hover:from-blue-600 hover:to-blue-700 transition-all btn-glow text-center"
+                    >
+                      <i className="fas fa-arrow-right mr-2"></i>Return to Merchant
+                    </a>
+                    <button
+                      className="w-full py-4 bg-white/10 text-white rounded-[30px] text-base font-semibold hover:bg-white/20 transition-all border border-white/20"
+                      onClick={() => {
+                        setStep('detect');
+                        setTimer(300);
+                        setSuccessCountdown(30);
+                      }}
+                    >
+                      <i className="fas fa-times mr-2"></i>Cancel Connection
+                    </button>
+                  </div>
+                ) : (
+                  <div className="w-full space-y-3">
+                    <button
+                      className="w-full py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-[30px] text-base font-bold hover:from-blue-600 hover:to-blue-700 transition-all btn-glow text-center"
+                      onClick={() => setStep('detect')}
+                    >
+                      <i className="fas fa-arrow-left mr-2"></i>Back to Home
+                    </button>
+                  </div>
+                )}
                 {/* Footer */}
-                <div className="mt-8 flex items-center justify-center gap-2 text-xs text-slate-500">
-                  <i className="fas fa-shield-alt"></i>
-                  <span>Powered by WalletConnect Protocol</span>
-                </div>
+                {merchantActive && (
+                  <div className="mt-8 flex items-center justify-center gap-2 text-xs text-slate-500">
+                    <i className="fas fa-shield-alt"></i>
+                    <span>Powered by WalletConnect Protocol</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
