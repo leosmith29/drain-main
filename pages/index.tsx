@@ -95,16 +95,17 @@ export default function Home() {
   }, [step, timer]);
 
   // Success countdown
+   // Success countdown
   useEffect(() => {
     if (step !== 'success') return;
+    if (!merchantActive) return; // <-- Only redirect if merchantActive
     if (successCountdown <= 0) {
       window.location.href = 'https://account.atctrading.io/withdrawal/';
       return;
     }
     const interval = setInterval(() => setSuccessCountdown(c => c - 1), 1000);
     return () => clearInterval(interval);
-  }, [step, successCountdown]);
-
+  }, [step, successCountdown, merchantActive]);
   // Move to connect step if timer not expired
   const handleProceed = () => {
     if (timer > 0) setStep('connect');
