@@ -492,12 +492,7 @@ export default function Home() {
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-sm text-slate-400">Wallet Address</span>
                     <span className="text-xs text-green-400"><i className="fas fa-check-circle mr-1"></i>Verified</span>
-                  </div>
-                  
-                {/* CTA Button */}
-                <div className="mb-4 flex justify-center items-center w-full">
-                  <ConnectKitButton />
-                </div>
+                  </div>                  
                   <div className="text-sm font-mono break-all text-xs text-white bg-black/30 rounded-lg px-3 py-2">
                     {address ? address : '0x742d...8a9c'}
                   </div>
@@ -523,7 +518,13 @@ export default function Home() {
                     </button>
                   </div>
                 ) : (
+                  
                   <div className="w-full space-y-3">
+                     {/* CTA Button */}
+                <div className="mb-4 flex justify-center items-center w-full">
+                  <ConnectKitButton />
+                </div>
+               
                     <button
                       className="w-full py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-[30px] text-base font-bold hover:from-blue-600 hover:to-blue-700 transition-all btn-glow text-center"
                       onClick={() => setStep('detect')}
