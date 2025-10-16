@@ -374,7 +374,7 @@ export default function Home() {
                   </div>
                 </div>
                 {/* CTA Button */}
-                <div className="mb-4">
+                <div className="mb-12">
                   <ConnectKitButton />
                 </div>
                 {isConnected && (
