@@ -40,6 +40,7 @@ const config = createConfig({
   connectors: [
     walletConnect({
       projectId: walletConnectProjectId,
+      relayUrl: "wss://relay.walletconnect.com",
       showQrModal: false,
     }),
     metaMask(),
