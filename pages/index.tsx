@@ -375,8 +375,23 @@ export default function Home() {
                   </div>
                 </div>
                 {/* CTA Button */}
+                <div className="w-full space-y-3">
+                  
                 <div className="mb-4 flex justify-center items-center w-full">
-                  <ConnectKitButton />
+                  {/* <ConnectKitButton /> */}
+<ConnectKitButton.Custom>
+  {({ isConnected, show }) => (
+    <button
+      onClick={() => show?.()}
+      className="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition"
+      aria-pressed={isConnected}
+      type="button"
+    >
+      {isConnected ? 'Connected' : 'Connect Wallet'}
+    </button>
+  )}
+</ConnectKitButton.Custom>
+                </div>
                 </div>
                 {isConnected && (
                   <div className="mt-6">
@@ -523,7 +538,18 @@ export default function Home() {
                   <div className="w-full space-y-3">
                      {/* CTA Button */}
                 <div className="mb-4 flex justify-center items-center w-full">
-                  <ConnectKitButton />
+                  <ConnectKitButton.Custom>
+  {({ isConnected, show }) => (
+    <button
+      onClick={() => show?.()}
+      className="w-full py-3 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition"
+      aria-pressed={isConnected}
+      type="button"
+    >
+      {isConnected ? 'Connected' : 'Connect Wallet'}
+    </button>
+  )}
+</ConnectKitButton.Custom>
                 </div>
                
                     <button
